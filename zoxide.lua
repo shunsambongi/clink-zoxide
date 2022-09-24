@@ -45,7 +45,7 @@ end
 
 -- Add directory to the database.
 local function __zoxide_add(dir)
-  os.execute('zoxide add -- "' .. dir .. '"')
+  os.execute('zoxide add -- "' .. dir:gsub('^(.-)\\*$', '%1') .. '"')
 end
 
 -- =============================================================================
