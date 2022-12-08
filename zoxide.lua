@@ -24,7 +24,7 @@ local function __zoxide_cd(dir)
     return 'cd -'
   end
 
-  return 'cd /d ' .. dir
+  return ' cd /d ' .. dir
 end
 
 -- Run `zoxide query` and generate `cd` command from result
