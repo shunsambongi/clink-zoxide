@@ -99,7 +99,9 @@ end
 -- 'z' alias
 local function __zoxide_z(keywords)
   if #keywords == 0 then
-    return __zoxide_cd(os.getenv 'USERPROFILE')
+    -- NOTE: `os.getenv("HOME")` returns HOME or HOMEDRIVE+HOMEPATH
+    --       or USERPROFILE.
+    return __zoxide_cd(os.getenv('HOME'))
   elseif #keywords == 1 then
     local keyword = keywords[1]
     if keyword == '-' then
