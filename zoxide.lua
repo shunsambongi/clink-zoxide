@@ -96,6 +96,15 @@ end
 -- Define aliases.
 --
 
+-- remove double quotes
+function unquote(s)
+  local unquoted = string.match(s, '^"(.*)"$')
+  if unquoted then
+    return unquoted
+  end
+  return s
+end
+
 -- 'z' alias
 local function __zoxide_z(keywords)
   if #keywords == 0 then
@@ -106,8 +115,11 @@ local function __zoxide_z(keywords)
     local keyword = keywords[1]
     if keyword == '-' then
       return __zoxide_cd '-'
-    elseif os.isdir(keyword) then
-      return __zoxide_cd(keyword)
+    else
+      local path = os.getfullpathname(unquote(keyword))
+      if path and os.isdir(path) then
+        return __zoxide_cd(path)
+      end
     end
   end
 
