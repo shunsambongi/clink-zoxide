@@ -167,5 +167,33 @@ end
 
 -- =============================================================================
 --
+-- Clink command color.
+--
+
+local cl = clink.classifier(50)
+
+function cl:classify(commands)
+  if not commands[1] then
+      return
+  end
+
+  local color = settings.get('color.doskey')
+  if not color or color == '' then
+      return
+  end
+
+  local zoxide_cmd = settings.get('zoxide.cmd')
+
+  local line_state = commands[1].line_state
+  local classifications = commands[1].classifications
+  local line = line_state:getline()
+
+  if line:match("^"..zoxide_cmd.." ") then
+    classifications:applycolor(1, #zoxide_cmd, color, true--[[overwrite]])    
+  end
+end
+
+-- =============================================================================
+--
 -- To initalize zoxide, add this script to one of clink's lua script locations (e.g. zoxide.lua)
 -- (see https://chrisant996.github.io/clink/clink.html#location-of-lua-scripts)
