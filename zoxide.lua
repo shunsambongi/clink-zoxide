@@ -106,7 +106,7 @@ local function __zoxide_z(keywords)
     local keyword = keywords[1]
     if keyword == '-' then
       return __zoxide_cd '-'
-    elseif os.isdir(keyword) then
+    elseif os.isdir(keyword:gsub('"', '')) then
       return __zoxide_cd(keyword)
     end
   end
