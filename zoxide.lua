@@ -188,8 +188,10 @@ function cl:classify(commands)
   local classifications = commands[1].classifications
   local line = line_state:getline()
 
-  if line:match("^"..zoxide_cmd.." ") then
-    classifications:applycolor(1, #zoxide_cmd, color, true--[[overwrite]])    
+  if line:match("^%s*"..zoxide_cmd.." ") then
+    -- cannot combine match and find - we need to know that zoxide_cmd is the first thing
+    local start = line:find(zoxide_cmd)
+    classifications:applycolor(start, #zoxide_cmd, color, true--[[overwrite]])    
   end
 end
 
