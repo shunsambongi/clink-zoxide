@@ -203,7 +203,11 @@ function cl:classify(commands)
   if line:match("^%s*"..zoxide_cmd.." ") then
     -- cannot combine match and find - we need to know that zoxide_cmd is the first thing
     local start = line:find(zoxide_cmd)
-    classifications:applycolor(start, #zoxide_cmd, color, true--[[overwrite]])    
+    classifications:applycolor(start, #zoxide_cmd, color, true--[[overwrite]])
+  elseif line:match("^%s*"..zoxide_cmd.."i ") then
+    local start = line:find(zoxide_cmd)
+    -- add one to the span to apply color to, for the extra 'i'
+    classifications:applycolor(start, #zoxide_cmd + 1, color, true--[[overwrite]])
   end
 end
 
