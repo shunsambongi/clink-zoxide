@@ -116,7 +116,14 @@ local function __zoxide_z(keywords)
     if keyword == '-' then
       return __zoxide_cd '-'
     else
-      local path = os.getfullpathname(unquote(keyword))
+      local unquoted_keyword = unquote(keyword)
+      if unquoted_keyword:sub(1, 1) == '~' then
+        local home = os.getenv('HOME')
+        if home then
+          unquoted_keyword = unquoted_keyword:gsub('^~', home)
+        end
+      end
+      local path = os.getfullpathname(unquoted_keyword)
       if path and os.isdir(path) then
         return __zoxide_cd(path)
       end
